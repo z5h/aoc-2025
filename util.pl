@@ -1,26 +1,21 @@
 % -*-Prolog-*-
 :- module(util,
           [
+          	debug_call/1,
           	list_length/2,
-          	seq//1,
-            seqq//1,
             ignore//0,
             any//1
           ]).
 
+:- meta_predicate(debug_call(0)).
+debug_call(G) :-
+	(   G
+	*-> writeln(true:G)
+	;   writeln(fail:G)
+	).
+
 list_length(Li, Le) :- length(Li, Le).
 
-% DCG helpers taken/inspired trom https://www.metalevel.at/prolog/dcg 
-
-% A sequence
-seq([]) --> [].
-seq([E|Es]) --> [E], seq(Es).
-
-% a sequence of sequences
-seqq([]) --> [].
-seqq([Es|Ess]) --> seq(Es), seqq(Ess).
-
-% ignore
 ignore --> [].
 ignore --> [_], ignore.
 
