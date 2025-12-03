@@ -21,3 +21,10 @@ ignore --> [_], ignore.
 
 any([]) --> [].
 any([H|T]) --> [H], any(T).
+
+:- meta_predicate(in_out_phrase(?, ?, //)).
+in_out_phrase(I, O, P) :-
+    phrase(P, I, O).
+
+matches_all(Phrases, I, O) :-
+    maplist(in_out_phrase(I, O), Phrases).
