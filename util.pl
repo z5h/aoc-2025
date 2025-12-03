@@ -1,20 +1,32 @@
 % -*-Prolog-*-
 :- module(util,
           [
-          	debug_call/1,
-          	list_length/2,
-            ignore//0,
-            any//1
+              countdown/3,
+              debug_call/1,
+              list_length/2,
+              some_of//1,
+              ignore//0,
+              any//1
           ]).
+
+countdown(From, To, N) :-
+    between(To, From, M),
+    N is From - M + To.
 
 :- meta_predicate(debug_call(0)).
 debug_call(G) :-
-	(   G
-	*-> writeln(true:G)
-	;   writeln(fail:G)
-	).
+    (   G
+    *-> writeln(true:G)
+    ;   writeln(fail:G)
+    ).
 
 list_length(Li, Le) :- length(Li, Le).
+
+:- meta_predicate(some_of(3, ?, ?)).
+some_of(_) --> [].
+some_of(P) -->
+    call(P, _),
+    some_of(P).
 
 ignore --> [].
 ignore --> [_], ignore.
