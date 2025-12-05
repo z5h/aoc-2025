@@ -11,15 +11,6 @@
 :- use_module(library(rbtrees)).
 :- use_module(util).
 
-:- op(950, fy, '*').
-:- meta_predicate('*'(0)).
-*(_).
-
-:- op(950, fy, '@').
-:- meta_predicate('@'(0)).
-:- det('@'/1).
-@(G) :- G.
-
 
 test_mode :- false.
 input_file(F) :-
@@ -28,7 +19,6 @@ input_file(F) :-
     ;   F = 'input/04/input.txt'
     ).
 
-
 a :- 
     input_file(Input),
     rb_empty(E),
@@ -36,7 +26,6 @@ a :-
     rolls_accessible(Rolls, A),
     length(A, Result),
     writeln(Result).
-    %format("Total is ~10r", [Total]).
 
 b :- 
     input_file(Input),
@@ -47,7 +36,6 @@ b :-
     rolls_count(Remaining, RemainingCount),
     Result is InitialCount - RemainingCount,
     writeln(Result).
-    %format("Total is ~10r", [Total]).
 
 is_roll('@').
 

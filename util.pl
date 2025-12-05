@@ -1,6 +1,8 @@
 % -*-Prolog-*-
 :- module(util,
           [
+              op(950, fy, '*'),
+              op(950, fy, '@'),
               countdown/3,
               debug_call/1,
               list_length/2,
@@ -8,6 +10,13 @@
               ignore//0,
               any//1
           ]).
+
+:- meta_predicate('*'(0)).
+*(_).
+
+:- meta_predicate('@'(0)).
+:- det('@'/1).
+@(G) :- G.
 
 countdown(From, To, N) :-
     between(To, From, M),

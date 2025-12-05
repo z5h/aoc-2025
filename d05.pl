@@ -10,16 +10,6 @@
 :- use_module(library(clpfd)).
 :- use_module(util).
 
-:- op(950, fy, '*').
-:- meta_predicate('*'(0)).
-*(_).
-
-:- op(950, fy, '@').
-:- meta_predicate('@'(0)).
-:- det('@'/1).
-@(G) :- G.
-
-
 test_mode :- false.
 input_file(F) :-
     (   test_mode
@@ -27,18 +17,16 @@ input_file(F) :-
     ;   F = 'input/05/input.txt'
     ).
 
-
-
 a_and_b :- 
     input_file(Input),
     empty_fdset(E),
     phrase_from_file((ranges(E-FDSet), ranges_fresh_spoiled(FDSet, []-Fresh, []-_Spoiled)), Input),
+
     length(Fresh, FreshCount),
     format("A: Fresh Count is ~10r", [FreshCount]),
     FreshId in_set FDSet,
     fd_size(FreshId, FreshSize),
     format("B: Fresh ID Size is ~10r", [FreshSize]).
-
 
 ranges(FDSet0-FDSetN) -->
     integer(A), `-`, integer(B),
