@@ -13,7 +13,8 @@
               some_of//3,
               ignore//0,
               any//1,
-              trace_dcg//1
+              trace_dcg//1,
+              countall/2
           ]).
 
 :- meta_predicate('*'(0)).
@@ -22,6 +23,17 @@
 :- meta_predicate('@'(0)).
 :- det('@'/1).
 @(G) :- G.
+
+
+:- meta_predicate(countall(1, ?)).
+countall(G, C) :-
+    Counter = counter(0),
+    ( call_nth(G, N),
+      nb_setarg(1, Counter, N),
+      fail
+    ; true
+    ),
+    Counter = counter(C).
 
 countdown(From, To, N) :-
     between(To, From, M),
