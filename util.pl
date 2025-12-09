@@ -6,6 +6,8 @@
               '@'/1,
               '*'/1,
               countdown/3,
+              op(950, fy, ?),
+              '?'/1,
               debug_call/1,
               list_length/2,
               some_of//1,
@@ -14,7 +16,8 @@
               ignore//0,
               any//1,
               trace_dcg//1,
-              countall/2
+              countall/2,
+              apply_to_until_is/4
           ]).
 
 :- meta_predicate('*'(0)).
@@ -24,6 +27,13 @@
 :- det('@'/1).
 @(G) :- G.
 
+:- meta_predicate(apply_to_until_is(2, +, 1, ?)).
+apply_to_until_is(F, In, Test, Out) :-
+    (   call(Test, In)
+    ->  Out = In
+    ;   call(F, In, Next),
+        apply_to_until_is(F, Next, Test, Out)
+    ). 
 
 :- meta_predicate(countall(1, ?)).
 countall(G, C) :-
@@ -46,6 +56,8 @@ debug_call(G) :-
     ;   writeln(fail:G)
     ).
 
+:- meta_predicate('?'(0)).
+'?'(G) :- debug_call(G).
 
 :- meta_predicate(trace_dcg(0, ?, ?)).
 trace_dcg(D) -->
